@@ -4,6 +4,7 @@ import dk.shadow.commands.ArmorStandCommand;
 import dk.shadow.commands.ArmorStandComplete;
 import dk.shadow.commands.EntityDamage;
 import dk.shadow.commands.InteractEvent;
+import dk.shadow.task.UpdateArmorStand;
 import dk.shadow.utils.Config;
 import dk.shadow.utils.CreateLocations;
 import org.bukkit.command.TabCompleter;
@@ -51,7 +52,8 @@ public class Main extends JavaPlugin {
         locationYML = location.getConfig();
 
         //Register Events
-
+        UpdateArmorStand updateArmorStand = new UpdateArmorStand();
+        updateArmorStand.runTaskTimer(instance, 0L, config.getConfig().getInt("updatere-delay") * 20L);
 
         //Register Prizes
         rc = new CreateLocations();

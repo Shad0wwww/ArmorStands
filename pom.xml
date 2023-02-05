@@ -67,9 +67,14 @@
             <id>minecraft-repo</id>
             <url>https://libraries.minecraft.net/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
+
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -82,6 +87,13 @@
             <version>1.5.21</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.Shad0wwww</groupId>
+            <artifactId>OntimeTop</artifactId>
+            <version>a2752a2a57</version>
+        </dependency>
+
+
     </dependencies>
 
 </project>

@@ -26,7 +26,8 @@ public class CreateLocations {
         }
     }
     public static void addCrate(Location loc){
-        int n = Main.locationYML.getInt("Spawns");
+        int n = 0;
+        n = Main.locationYML.getInt("Spawns");
         n++;
         Main.locationYML.set("Spawns", n);
         Main.locationYML.set("Spawn.armorstand." + n + ".world", loc.getWorld().getName());
