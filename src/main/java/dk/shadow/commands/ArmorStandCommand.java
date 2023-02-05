@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 
 public class ArmorStandCommand implements CommandExecutor {
     SpawnArmorStand spawnArmorStand = new SpawnArmorStand();
+    //TODO add sign to yml and et gives text to them
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
