@@ -1,0 +1,10 @@
+name: ArmorStands
+version: '${project.version}'
+main: dk.shadow.Main
+api-version: 1.8
+authors: [ Shad0wsense ]
+description: none
+website: cutekat.dk
+commands:
+  armor:
+    description: hejsa
