@@ -30,8 +30,8 @@ public class SpawnArmorStand {
         }
 
 
-        int i = 1;
-        Map<Double, String> topPlayers = GetTop.getTopBalances(5);
+        int i = Main.config.getConfig().getInt("armorstandSpawnfirstNumber", 1);
+        Map<Double, String> topPlayers = GetTop.getTopBalances(Main.config.getConfig().getInt("armorstandSpawn", 6));
         for (Map.Entry<Double, String> entry : topPlayers.entrySet()) {
 
 
@@ -100,7 +100,7 @@ public class SpawnArmorStand {
             }
 
             i++;
-            if (i == 6) {
+            if (i == Main.config.getConfig().getInt("armorstandSpawn", 6)) {
                 break;
             }
         }

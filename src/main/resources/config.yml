@@ -1,7 +1,8 @@
 updatere-besked: "&8&l[ &d&lTOP &8&l] &fOpdaterer..."
 updatere-delay: 300
 World: "World"
-
+armorstandSpawnfirstNumber: 1
+armorstandSpawn: 5
 Signinfo:
   - "&a&lBALTOP"
   - "&7&o( %player% &7)"
