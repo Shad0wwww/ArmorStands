@@ -1,66 +1,64 @@
 package dk.shadow.utils;
 
-import dk.nydt.commands.OntimeTop;
-import dk.nydt.utils.FormatTime;
-import dk.nydt.utils.TimeUtils;
+
 import dk.shadow.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.scheduler.BukkitRunnable;
+import dk.shadow.utils.Econ;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
+
+import static org.bukkit.Bukkit.getServer;
+
 
 public class SpawnArmorStand {
     private Location loc;
     private Location newloc;
+    private OfflinePlayer p;
 
     public void spawnArmorStand(Player player) {
 
         for (Entity ent : player.getWorld().getEntities()){
             if(ent instanceof ArmorStand) {
-                if (ent.getCustomName().contains("1") && (ent.getCustomName().contains("2") && (ent.getCustomName().contains("3") && (ent.getCustomName().contains("4") && (ent.getCustomName().contains("5")))))) {
-                    Main.getArmorStandList().remove((ArmorStand) ent);
-                    ent.remove();
-                }
+                Main.getArmorStandList().remove((ArmorStand) ent);
+                ent.remove();
+
             }
         }
 
 
-        OntimeTop ontimeTop = new OntimeTop();
-        String[] top = ontimeTop.getTop5();
-        FormatTime formatTime = new FormatTime();
+        int i = 1;
+        Map<Double, String> topPlayers = GetTop.getTopBalances(5);
+        for (Map.Entry<Double, String> entry : topPlayers.entrySet()) {
 
 
 
 
-        int i = 0;
+            System.out.println(entry.getKey() + " " + entry.getValue());
+            double balance = entry.getKey();
+            String name = entry.getValue();
+            System.out.println("name " + name + " " + topPlayers);
+            p = Bukkit.getOfflinePlayer(name);
 
-        for (String id : Main.locationYML.getConfigurationSection("Spawn.armorstand").getKeys(false)) {
 
-
-
-
-            double x = Main.locationYML.getDouble("Spawn.armorstand." + id + ".x");
-            double y = Main.locationYML.getDouble("Spawn.armorstand." + id + ".y");
-            double z = Main.locationYML.getDouble("Spawn.armorstand." + id + ".z");
+            double x = Main.locationYML.getDouble("Spawn.armorstand." + i + ".x");
+            double y = Main.locationYML.getDouble("Spawn.armorstand." + i + ".y");
+            double z = Main.locationYML.getDouble("Spawn.armorstand." + i + ".z");
 
 
             World w = Bukkit.getServer().getWorld(Main.config.getConfig().getString("World", "World"));
             loc = new Location(w, x, y, z);
 
-            double xx = Main.signYML.getDouble("Sign.sign." + id + ".x");
-            double yy = Main.signYML.getDouble("Sign.sign." + id + ".y");
-            double zz = Main.signYML.getDouble("Sign.sign." + id + ".z");
+            double xx = Main.signYML.getDouble("Sign.sign." + i + ".x");
+            double yy = Main.signYML.getDouble("Sign.sign." + i + ".y");
+            double zz = Main.signYML.getDouble("Sign.sign." + i + ".z");
 
             newloc = new Location(w, xx, yy, zz);
 
-            int score = dk.nydt.Main.ontimeYML.getInt("Accounts." + top[i]);
-            OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(top[i]));
+            //int score = dk.nydt.Main.ontimeYML.getInt("Accounts." + top[i]);
 
             ArmorStand armorStand = (ArmorStand) loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
             Main.getArmorStandList().add(armorStand);
@@ -68,7 +66,7 @@ public class SpawnArmorStand {
             armorStand.setSmall(true);
             armorStand.setVisible(true);
             armorStand.setCustomNameVisible(true);
-            armorStand.setCustomName(Chat.colored( "&8&l[&a#" + (Math.addExact(i, 1)) + "&8&l]" +  "&f " + p.getName().toUpperCase()));
+            armorStand.setCustomName(Chat.colored( "&8&l[&a#" +  i + "&8&l]" +  "&f " + p.getName().toUpperCase()));
 
             ItemStack head = SkullCreator.itemFromName(p.getName());
             armorStand.setHelmet(head);
@@ -84,16 +82,25 @@ public class SpawnArmorStand {
 
             if (block.getState() instanceof Sign) {
                 Sign sign = (Sign) block.getState();
+                List<String> signs = Main.config.getConfig().getStringList("Signinfo");
+                for (int n = 0; n < signs.size(); n++) {
 
-                sign.setLine(0, Chat.colored("&d&lONTIME"));
-                sign.setLine(1, Chat.colored("&7&o(" + p.getName() + "&7)"));
-                sign.setLine(2, Chat.colored(" "));
-                sign.setLine(3, Chat.colored("&7" + formatTime.calculateTime(score)));
-                sign.update();
+                    String message = signs.get(n);
+                    message = message.replace("%balance%", GetTop.formatNum(balance));
+                    message = message.replace("%player%", p.getName());
+
+                    sign.setLine(n, Chat.colored(message));
+                    sign.update();
+
+
+
+                }
+
+
             }
 
             i++;
-            if (i == 5) {
+            if (i == 6) {
                 break;
             }
         }
@@ -101,6 +108,10 @@ public class SpawnArmorStand {
 
 
 
+    }
+
+    public OfflinePlayer getTopPlayer() {
+        return p;
     }
 
 }

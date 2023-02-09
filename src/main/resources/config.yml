@@ -1,3 +1,9 @@
-updatere-besked: "&8&l[ &d&lTOP &8&l] &fOpdatere..."
+updatere-besked: "&8&l[ &d&lTOP &8&l] &fOpdaterer..."
 updatere-delay: 300
 World: "World"
+
+Signinfo:
+  - "&a&lBALTOP"
+  - "&7&o( %player% &7)"
+  - ""
+  - "&7%balance%"

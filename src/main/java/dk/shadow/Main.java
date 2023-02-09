@@ -7,10 +7,13 @@ import dk.shadow.commands.InteractEvent;
 import dk.shadow.task.UpdateArmorStand;
 import dk.shadow.utils.Config;
 import dk.shadow.utils.CreateLocations;
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -23,7 +26,7 @@ public class Main extends JavaPlugin {
     public static Config config, location, sign;
     public static FileConfiguration configYML, locationYML, signYML;
     public static CreateLocations rc;
-
+    public static Economy econ = null;
     private static List<ArmorStand> armorStandList = new ArrayList<>();
 
     public static List<ArmorStand> getArmorStandList() {
@@ -58,6 +61,14 @@ public class Main extends JavaPlugin {
         signYML = sign.getConfig();
 
 
+        if (!setupEconomy() ) {
+            Bukkit.getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            Bukkit.getLogger().severe(String.format(String.valueOf(getServer().getPluginManager().getPlugin("Vault"))));
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        setupEconomy();
+
         //Register Events
         UpdateArmorStand updateArmorStand = new UpdateArmorStand();
         updateArmorStand.runTaskTimer(instance, 0L, config.getConfig().getInt("updatere-delay") * 20L);
@@ -72,6 +83,19 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
     }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+
 
     public static Main getInstance(){
         return instance;
