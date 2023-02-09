@@ -20,8 +20,8 @@ import java.util.List;
 public class Main extends JavaPlugin {
     private static PluginManager pluginManager;
     public static Main instance;
-    public static Config config, location;
-    public static FileConfiguration configYML, locationYML;
+    public static Config config, location, sign;
+    public static FileConfiguration configYML, locationYML, signYML;
     public static CreateLocations rc;
 
     private static List<ArmorStand> armorStandList = new ArrayList<>();
@@ -51,6 +51,13 @@ public class Main extends JavaPlugin {
         location = new Config(this, null, "location.yml");
         locationYML = location.getConfig();
 
+        if (!(new File(getDataFolder(), "sign.yml")).exists())
+            saveResource("sign.yml", false);
+
+        sign = new Config(this, null, "sign.yml");
+        signYML = sign.getConfig();
+
+
         //Register Events
         UpdateArmorStand updateArmorStand = new UpdateArmorStand();
         updateArmorStand.runTaskTimer(instance, 0L, config.getConfig().getInt("updatere-delay") * 20L);
@@ -58,6 +65,7 @@ public class Main extends JavaPlugin {
         //Register Prizes
         rc = new CreateLocations();
         rc.reloadLocations();
+        rc.reloadSignLocations();
     }
 
     @Override
