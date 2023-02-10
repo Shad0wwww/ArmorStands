@@ -4,7 +4,8 @@ main: dk.shadow.Main
 api-version: 1.8
 authors: [ Shad0wsense ]
 description: none
-website: cutekat.dk
+website: sastore.dk
 commands:
   armor:
-    description: hejsa
+    description: command med mange features.
+    aliases: [ArmorStands, arm]

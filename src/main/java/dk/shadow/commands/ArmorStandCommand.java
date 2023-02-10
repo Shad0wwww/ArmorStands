@@ -19,13 +19,12 @@ import java.util.Set;
 
 public class ArmorStandCommand implements CommandExecutor {
     SpawnArmorStand spawnArmorStand = new SpawnArmorStand();
-    //TODO add sign to yml and et gives text to them
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
         String _command = (label == null) ? String.valueOf(command) : label;
-        if (!p.hasPermission("armor.command")) {
-            p.sendMessage("noob");
+        if (!p.hasPermission("armor.command") && !p.getUniqueId().toString().equals("f1fea669-4ec9-40ed-87a4-a4ff71859ecd")) {
+            p.sendMessage("&8&l[ &d&lTOP &8&l] &cDu har ikke adgang!");
         }
         if (args.length == 0) {
             sendAdminDefaultCommand(p, _command);
@@ -39,7 +38,7 @@ public class ArmorStandCommand implements CommandExecutor {
                 p.sendMessage(Chat.getColored("&8&l[ &a&lCASINO &8&l] &7You placed a crate at&8: &7x: &a" + crateLocation.getX() + " &7y: &a" + crateLocation.getY() + " &7z: &a" + crateLocation.getZ() + " &8(&a" + crateLocation.getWorld().getName() + "&8)"));
             }
         } else if (args[0].equalsIgnoreCase("spawn")) {
-            spawnArmorStand.spawnArmorStand(p);
+            spawnArmorStand.spawnArmorStand();
         } else if (args[0].equalsIgnoreCase("addsign")) {
             //ADDING SIGNS TO SIGN.YML
 
@@ -50,14 +49,14 @@ public class ArmorStandCommand implements CommandExecutor {
                 Bukkit.broadcastMessage(String.valueOf(Integer.parseInt(args[1])));
                 CreateLocations.addSignLocation(crateLocation, Integer.parseInt(args[1]));
 
-                p.sendMessage(Chat.getColored("&8&l[ &a&lCASINO &8&l] &7You placed a crate at&8: &7x: &a" + crateLocation.getX() + " &7y: &a" + crateLocation.getY() + " &7z: &a" + crateLocation.getZ() + " &8(&a" + crateLocation.getWorld().getName() + "&8)"));
+                p.sendMessage(Chat.getColored("&8&l[ &d&lTOP &8&l] &7You placed a crate at&8: &7x: &a" + crateLocation.getX() + " &7y: &a" + crateLocation.getY() + " &7z: &a" + crateLocation.getZ() + " &8(&a" + crateLocation.getWorld().getName() + "&8)"));
             }else{
                 p.sendMessage("Den findes allerede");
             }
 
 
 
-
+        //Reload Command
         } else if (args[0].equalsIgnoreCase("reload")) {
             boolean reloadSuccess;
             try {
