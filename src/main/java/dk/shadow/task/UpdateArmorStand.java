@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class UpdateArmorStand extends BukkitRunnable {
-    SpawnArmorStand armorStand = new SpawnArmorStand();
+    SpawnArmorStand spawnArmorStand = new SpawnArmorStand();
     private boolean stop = false;
     @Override
     public void run() {
@@ -18,6 +18,6 @@ public class UpdateArmorStand extends BukkitRunnable {
         }
 
         Bukkit.broadcastMessage(Chat.colored(Main.config.getConfig().getString("updatere-besked")));
-        armorStand.spawnArmorStand();
+        spawnArmorStand.spawnArmorStand();
     }
 }

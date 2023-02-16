@@ -34,12 +34,10 @@ public class SpawnArmorStand {
         for (Map.Entry<Double, String> entry : topPlayers.entrySet()) {
             double balance = entry.getKey();
             String name = entry.getValue();
-            p = Bukkit.getOfflinePlayer(name);
-            //System.out.println("p - 38" + p.getName() + " Balance " + balance + " i " + i);
+
+            p = getServer().getOfflinePlayer(name);
             getSpawnLocation(i);
             getSignLocation(i);
-
-            //int score = dk.nydt.Main.ontimeYML.getInt("Accounts." + top[i]);
 
             spawnArmorStandStand(i);
 

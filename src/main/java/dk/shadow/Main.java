@@ -71,7 +71,7 @@ public class Main extends JavaPlugin {
 
         //Register Events
         UpdateArmorStand updateArmorStand = new UpdateArmorStand();
-        updateArmorStand.runTaskTimer(instance, 0L, config.getConfig().getInt("updatere-delay") * 20L);
+        updateArmorStand.runTaskTimer(instance, 100L, config.getConfig().getInt("updatere-delay") * 20L);
 
         //Register Prizes
         rc = new CreateLocations();
